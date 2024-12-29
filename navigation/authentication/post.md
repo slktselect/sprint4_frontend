@@ -130,6 +130,14 @@ search_exclude: true
     </div>
 </div>
 
+<div class="container">
+    <button id="showFavorites">Show My Favorites</button>
+    <div id="favorites" class="data" style="display: none;">
+        <h2>My Favorite Posts</h2>
+        <div id="favoriteDetails"></div>
+    </div>
+</div>
+
 <script type="module">
     // Import server URI and standard fetch options
     import { pythonURI, fetchOptions } from '{{ site.baseurl }}/assets/js/api/config.js';
@@ -345,6 +353,43 @@ search_exclude: true
             console.error('Error fetching data:', error);
         }
     }
+
+    document.getElementById('showFavorites').addEventListener('click', async function() {
+        const favoritesDiv = document.getElementById('favorites');
+        const favoriteDetailsDiv = document.getElementById('favoriteDetails');
+        favoriteDetailsDiv.innerHTML = ''; // 清空之前的内容
+
+        try {
+            const response = await fetch(`${pythonURI}/api/post/favorites`, {
+                ...fetchOptions,
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            if (!response.ok) {
+                throw new Error('Failed to fetch favorite posts: ' + response.statusText);
+            }
+
+            const favoritePosts = await response.json();
+            favoritePosts.forEach(postItem => {
+                const postElement = document.createElement('div');
+                postElement.className = 'post-item';
+                postElement.innerHTML = `
+                    <h3>${postItem.title}</h3>
+                    <p><strong>Channel:</strong> ${postItem.channel_name}</p>
+                    <p><strong>User:</strong> ${postItem.user_name}</p>
+                    <p>${postItem.comment}</p>
+                `;
+                favoriteDetailsDiv.appendChild(postElement);
+            });
+
+            // 显示收藏的帖子
+            favoritesDiv.style.display = 'block';
+        } catch (error) {
+            console.error('Error fetching favorite posts:', error);
+        }
+    });
 
     // Fetch groups when the page loads
     fetchGroups(); 
