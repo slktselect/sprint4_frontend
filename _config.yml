@@ -1,0 +1,24 @@
+title: The Travelers
+description: "A website for all travelers"
+github_repo: "sprint4_frontend" 
+baseurl: "/sprint4_frontend"
+future: true
+remote_theme: pages-themes/cayman@v0.2.0
+minima:
+  skin: dark
+# remote_theme: pages-themes/midnight@v0.2.0
+# remote_theme: pages-themes/dinky@v0.2.0
+# remote_theme: pages-themes/minimal@v0.2.0
+# remote_theme: pages-themes/cayman@v0.2.0
+# remote_theme: pages-themes/time-machine@v0.2.0
+plugins:
+  - jekyll-remote-theme
+header_pages:
+  - navigation/ai.md
+  - navigation/authentication/post.md
+  - navigation/authentication/developer.md
+  - navigation/authentication/weather.md
+  
+# GitHub Metadata
+github:
+  token: YOUR_GITHUB_TOKEN
