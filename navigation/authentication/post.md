@@ -109,7 +109,7 @@ search_exclude: true
 
 <div class="container">
     <div class="form-container">
-        <h2>Add New Posts</h2>
+        <h2>Add New Post</h2>
         <form id="postForm">
             <label for="title">Title:</label>
             <input type="text" id="title" name="title" required>
