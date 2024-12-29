@@ -310,7 +310,9 @@ search_exclude: true
                     <p><strong>Channel:</strong> ${postItem.channel_name}</p>
                     <p><strong>User:</strong> ${postItem.user_name}</p>
                     <p>${postItem.comment}</p>
-                    <button class="collect-button" data-post-id="${postItem.id}">Collect</button>
+                    <button class="collect-button" data-post-id="${postItem.id}">
+                        ${postItem.is_favorite ? 'In The Collect' : 'Collect'}
+                    </button>
                 `;
                 detailsDiv.appendChild(postElement);
             });
