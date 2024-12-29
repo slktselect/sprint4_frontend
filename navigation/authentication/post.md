@@ -109,7 +109,7 @@ search_exclude: true
 
 <div class="container">
     <div class="form-container">
-        <h2>Add New Posts</h2>
+        <h2>Add New Post</h2>
         <form id="postForm">
             <label for="title">Title:</label>
             <input type="text" id="title" name="title" required>
@@ -320,20 +320,19 @@ search_exclude: true
                 button.addEventListener('click', async (event) => {
                     const postId = event.target.getAttribute('data-post-id');
                     try {
-                        const response = await fetch('/api/post/collect', {
+                        const response = await fetch(`${pythonURI}/api/post/collect`, {
+                            ...fetchOptions,
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json'
                             },
                             body: JSON.stringify({ post_id: postId })
                         });
-                        const result = await response.json();
-                        if (response.ok) {
-                            alert(result.message);
-                            fetchData(); // Refresh the posts
-                        } else {
-                            alert('Failed to update collection status.');
+                        if (!response.ok) {
+                            throw new Error('Failed to update collection status.');
                         }
+                        // 刷新post状态
+                        fetchData(channelId);
                     } catch (error) {
                         console.error('Error updating collection status:', error);
                     }
